@@ -1,14 +1,19 @@
 package commands
 
 import (
+	"github.com/briandowns/wasteband/config"
 	"github.com/mitchellh/cli"
 )
 
-type Delete struct{}
+type Delete struct {
+	config *config.Configuration
+}
 
-func NewDelete() cli.CommandFactory {
+func NewDelete(conf *config.Configuration) cli.CommandFactory {
 	return func() (cli.Command, error) {
-		return &Delete{}, nil
+		return &Delete{
+			config: conf,
+		}, nil
 	}
 }
 

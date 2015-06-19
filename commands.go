@@ -10,10 +10,10 @@ var Commands map[string]cli.CommandFactory
 
 func init() {
 	Commands = map[string]cli.CommandFactory{
-		"show":    commands.NewShow(),
-		"create":  commands.NewCreate(),
-		"delete":  commands.NewDelete(),
-		"set":     commands.NewSet(),
+		"show":    commands.NewShow(conf),
+		"create":  commands.NewCreate(conf),
+		"delete":  commands.NewDelete(conf),
+		"set":     commands.NewSet(conf),
 		"version": commands.NewVersion(WastebandVersion),
 	}
 }

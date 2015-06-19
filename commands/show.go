@@ -1,14 +1,19 @@
 package commands
 
 import (
+	"github.com/briandowns/wasteband/config"
 	"github.com/mitchellh/cli"
 )
 
-type Show struct{}
+type Show struct {
+	config *config.Configuration
+}
 
-func NewShow() cli.CommandFactory {
+func NewShow(conf *config.Configuration) cli.CommandFactory {
 	return func() (cli.Command, error) {
-		return &Show{}, nil
+		return &Show{
+			config: conf,
+		}, nil
 	}
 }
 

@@ -1,14 +1,19 @@
 package commands
 
 import (
+	"github.com/briandowns/wasteband/config"
 	"github.com/mitchellh/cli"
 )
 
-type Create struct{}
+type Create struct {
+	config *config.Configuration
+}
 
-func NewCreate() cli.CommandFactory {
+func NewCreate(conf *config.Configuration) cli.CommandFactory {
 	return func() (cli.Command, error) {
-		return &Create{}, nil
+		return &Create{
+			config: conf,
+		}, nil
 	}
 }
 

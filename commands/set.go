@@ -1,14 +1,19 @@
 package commands
 
 import (
+	"github.com/briandowns/wasteband/config"
 	"github.com/mitchellh/cli"
 )
 
-type Set struct{}
+type Set struct {
+	config *config.Configuration
+}
 
-func NewSet() cli.CommandFactory {
+func NewSet(conf *config.Configuration) cli.CommandFactory {
 	return func() (cli.Command, error) {
-		return &Set{}, nil
+		return &Set{
+			config: conf,
+		}, nil
 	}
 }
 

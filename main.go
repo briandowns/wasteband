@@ -6,11 +6,14 @@ import (
 	"log"
 	"os"
 
+	"github.com/briandowns/wasteband/config"
 	"github.com/mitchellh/cli"
 )
 
 var WastebandVersion = "0.1"
-var conf *configuration
+var conf *config.Configuration
+var configPath = "./config/"
+var configFile = "config.json"
 
 func main() {
 	if err := run(); err != nil {
@@ -22,12 +25,12 @@ func main() {
 func run() error {
 	log.SetOutput(ioutil.Discard)
 
-	conf, err := getConfig(config)
+	conf, err := config.GetConfig(configPath + configFile)
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	fmt.Println(*conf)
+	fmt.Println(conf)
 
 	c := &cli.CLI{
 		Args:     os.Args[:1],
