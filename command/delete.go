@@ -1,4 +1,4 @@
-package commands
+package command
 
 import (
 	"github.com/briandowns/wasteband/config"
@@ -19,4 +19,4 @@ func NewDelete(conf *config.Configuration) cli.CommandFactory {
 
 func (l *Delete) Run(args []string) int { return 0 }
 func (l *Delete) Help() string          { return "" }
-func (l *Delete) Synopsis() string      { return "" }
+func (l *Delete) Synopsis() string      { return "Delete an Elasticsearch resource" }

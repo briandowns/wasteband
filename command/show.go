@@ -1,4 +1,4 @@
-package commands
+package command
 
 import (
 	"github.com/briandowns/wasteband/config"
@@ -19,4 +19,4 @@ func NewShow(conf *config.Configuration) cli.CommandFactory {
 
 func (s *Show) Run(args []string) int { return 0 }
 func (s *Show) Help() string          { return "" }
-func (s *Show) Synopsis() string      { return "" }
+func (s *Show) Synopsis() string      { return "Show an Elasticsearch resource" }

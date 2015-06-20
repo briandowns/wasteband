@@ -1,4 +1,4 @@
-package commands
+package command
 
 import (
 	"github.com/briandowns/wasteband/config"
@@ -19,4 +19,4 @@ func NewSet(conf *config.Configuration) cli.CommandFactory {
 
 func (l *Set) Run(args []string) int { return 0 }
 func (l *Set) Help() string          { return "" }
-func (l *Set) Synopsis() string      { return "" }
+func (l *Set) Synopsis() string      { return "Set a cluster config parameter" }

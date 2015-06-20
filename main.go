@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 
+	"github.com/briandowns/wasteband/command"
 	"github.com/briandowns/wasteband/config"
 	"github.com/mitchellh/cli"
 )
@@ -15,6 +15,9 @@ var conf *config.Configuration
 var configPath = "./config/"
 var configFile = "config.json"
 
+// Commands is the mapping of all the available Consul commands.
+var Commands map[string]cli.CommandFactory
+
 func main() {
 	if err := run(); err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
@@ -23,21 +26,23 @@ func main() {
 }
 
 func run() error {
-	log.SetOutput(ioutil.Discard)
-
 	conf, err := config.GetConfig(configPath + configFile)
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	fmt.Println(conf)
-
 	c := &cli.CLI{
-		Args:     os.Args[:1],
 		Name:     "wasteband",
 		Version:  WastebandVersion,
-		Commands: Commands,
+		Args:     os.Args[1:],
 		HelpFunc: cli.BasicHelpFunc("wasteband"),
+		Commands: map[string]cli.CommandFactory{
+			"show":    command.NewShow(conf),
+			"create":  command.NewCreate(conf),
+			"delete":  command.NewDelete(conf),
+			"set":     command.NewSet(conf),
+			"version": command.NewVersion(WastebandVersion),
+		},
 	}
 
 	_, err = c.Run()
