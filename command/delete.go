@@ -1,7 +1,10 @@
 package command
 
 import (
+	"fmt"
+
 	"github.com/briandowns/wasteband/config"
+	"github.com/fatih/flags"
 	"github.com/mitchellh/cli"
 )
 
@@ -17,8 +20,15 @@ func NewDelete(conf *config.Configuration) cli.CommandFactory {
 	}
 }
 
-func (d *Delete) Run(args []string) int { return 0 }
-func (d *Delete) Help() string          { return "" }
+func (d *Delete) Run(args []string) int {
+	if flags.Has("help", args) {
+		fmt.Print(d.Help())
+		return 1
+	}
+	return 1
+}
+
+func (d *Delete) Help() string { return "" }
 
 // Synopsis provides a brief description of the command
 func (d *Delete) Synopsis() string {

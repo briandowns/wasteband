@@ -1,7 +1,10 @@
 package command
 
 import (
+	"fmt"
+
 	"github.com/briandowns/wasteband/config"
+	"github.com/fatih/flags"
 	"github.com/mitchellh/cli"
 )
 
@@ -17,8 +20,15 @@ func NewSet(conf *config.Configuration) cli.CommandFactory {
 	}
 }
 
-func (s *Set) Run(args []string) int { return 0 }
-func (s *Set) Help() string          { return "" }
+func (s *Set) Run(args []string) int {
+	if flags.Has("help", args) {
+		fmt.Print(s.Help())
+		return 1
+	}
+	return 1
+}
+
+func (s *Set) Help() string { return "" }
 
 // Synopsis provides a brief description of the command
 func (s *Set) Synopsis() string {
