@@ -17,6 +17,10 @@ func NewSet(conf *config.Configuration) cli.CommandFactory {
 	}
 }
 
-func (l *Set) Run(args []string) int { return 0 }
-func (l *Set) Help() string          { return "" }
-func (l *Set) Synopsis() string      { return "Set a cluster config parameter" }
+func (s *Set) Run(args []string) int { return 0 }
+func (s *Set) Help() string          { return "" }
+
+// Synopsis provides a brief description of the command
+func (s *Set) Synopsis() string {
+	return "Set a cluster config parameter"
+}

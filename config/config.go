@@ -7,11 +7,14 @@ import (
 
 // Configuration contains the ccpbot configuration
 type Configuration struct {
-	Name     string `json:"cluster_name"`
-	Endpoint string `json:"cluster_endpoint"`
-	Username string `json:"username"`
-	Password string `json:"password"`
+	Name        string `json:"cluster_name"`
+	Endpoint    string `json:"cluster_endpoint"`
+	Username    string `json:"username"`
+	Password    string `json:"password"`
+	SubSections []string
 }
+
+var allowedSubSections = []string{"index"}
 
 // GetConfig builds a config obj
 func GetConfig(cf string) (*Configuration, error) {
@@ -22,10 +25,13 @@ func GetConfig(cf string) (*Configuration, error) {
 
 	decoder := json.NewDecoder(confFile)
 	conf := &Configuration{}
+
 	err = decoder.Decode(conf)
 	if err != nil {
 		return nil, err
 	}
+
+	conf.SubSections = allowedSubSections
 
 	return conf, nil
 }

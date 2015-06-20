@@ -17,6 +17,10 @@ func NewDelete(conf *config.Configuration) cli.CommandFactory {
 	}
 }
 
-func (l *Delete) Run(args []string) int { return 0 }
-func (l *Delete) Help() string          { return "" }
-func (l *Delete) Synopsis() string      { return "Delete an Elasticsearch resource" }
+func (d *Delete) Run(args []string) int { return 0 }
+func (d *Delete) Help() string          { return "" }
+
+// Synopsis provides a brief description of the command
+func (d *Delete) Synopsis() string {
+	return "Delete an Elasticsearch resource"
+}

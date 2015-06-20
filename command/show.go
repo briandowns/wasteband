@@ -19,4 +19,8 @@ func NewShow(conf *config.Configuration) cli.CommandFactory {
 
 func (s *Show) Run(args []string) int { return 0 }
 func (s *Show) Help() string          { return "" }
-func (s *Show) Synopsis() string      { return "Show an Elasticsearch resource" }
+
+// Synopsis provides a brief description of the command
+func (s *Show) Synopsis() string {
+	return "Show an Elasticsearch resource"
+}

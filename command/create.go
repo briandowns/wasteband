@@ -17,6 +17,10 @@ func NewCreate(conf *config.Configuration) cli.CommandFactory {
 	}
 }
 
-func (l *Create) Run(args []string) int { return 0 }
-func (l *Create) Help() string          { return "" }
-func (l *Create) Synopsis() string      { return "Create an Elasticsearch resource" }
+func (c *Create) Run(args []string) int { return 0 }
+func (c *Create) Help() string          { return "" }
+
+// Synopsis provides a brief description of the command
+func (c *Create) Synopsis() string {
+	return "Create an Elasticsearch resource"
+}
