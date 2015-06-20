@@ -16,6 +16,16 @@ type Configuration struct {
 
 var allowedSubSections = []string{"index"}
 
+// ValidSubSection verifies that the given subsection is usaable
+func (c *Configuration) ValidSubSection(ss string) bool {
+	for _, i := range c.SubSections {
+		if i == ss {
+			return true
+		}
+	}
+	return false
+}
+
 // GetConfig builds a config obj
 func GetConfig(cf string) (*Configuration, error) {
 	confFile, err := os.Open(cf)

@@ -28,7 +28,10 @@ func (s *Set) Run(args []string) int {
 	return 1
 }
 
-func (s *Set) Help() string { return "" }
+// Help provides full help inforamation for the subcommand
+func (s *Set) Help() string {
+	return ""
+}
 
 // Synopsis provides a brief description of the command
 func (s *Set) Synopsis() string {

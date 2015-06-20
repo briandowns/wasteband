@@ -28,6 +28,7 @@ func (d *Delete) Run(args []string) int {
 	return 1
 }
 
+// Help provides full help inforamation for the subcommand
 func (d *Delete) Help() string { return "" }
 
 // Synopsis provides a brief description of the command

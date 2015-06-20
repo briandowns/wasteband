@@ -28,6 +28,7 @@ func (s *Show) Run(args []string) int {
 	return 1
 }
 
+// Help provides full help inforamation for the subcommand
 func (s *Show) Help() string { return "" }
 
 // Synopsis provides a brief description of the command
