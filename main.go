@@ -14,7 +14,6 @@ import (
 const WastebandVersion = "0.1"
 
 var conf *config.Configuration
-var configPath = "./config/"
 var configFile = "config.json"
 
 // Commands is the mapping of all the available wasteband commands.
@@ -28,7 +27,7 @@ func main() {
 }
 
 func run() error {
-	conf, err := config.GetConfig(configPath + configFile)
+	conf, err := config.GetConfig(configFile)
 	if err != nil {
 		log.Fatalln(err)
 	}
