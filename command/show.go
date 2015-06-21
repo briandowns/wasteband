@@ -42,6 +42,22 @@ func (s *Show) Run(args []string) int {
 
 	// process the subcommand and it's options
 	switch args[0] {
+	case "config":
+		fmt.Print("\nwasteband config:\n")
+		w := new(tabwriter.Writer)
+		w.Init(os.Stdout, 0, 8, 0, '\t', 0)
+
+		v := reflect.ValueOf(*s.config)
+
+		fmt.Fprint(w, "\n")
+
+		// iterate through the values of the struct and write to the tabwriter
+		for i := 0; i < v.NumField(); i++ {
+			fmt.Fprintf(w, "%s\t%v\n", v.Type().Field(i).Name, v.Field(i).Interface())
+		}
+
+		fmt.Fprintf(w, "\n")
+		w.Flush()
 	case "indexes":
 		// most of this functionaity will have to wait on PR 209 in the elastigo
 		// project to be merged.
