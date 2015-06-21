@@ -9,7 +9,7 @@ import (
 	"github.com/mitchellh/cli"
 )
 
-var deletableResources = []string{"index", "document", "replica", "shard"}
+var deletableResources = []string{"index", "document"}
 
 type Delete struct {
 	config *config.Configuration
@@ -63,10 +63,8 @@ func (d *Delete) Help() string {
 
 Options:
 
-  index       Delete an index.  Takes the index name as an argument
-  document    Delete a document. Takes the index, type, and id as arguments
-  replica     Delete a replica.
-  shard       Delete a shard.
+  index       Delete an index.  Takes the index name as an argument.
+  document    Delete a document. Takes the index, type, and id as arguments.
   
 `
 }
