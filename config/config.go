@@ -26,7 +26,7 @@ func (c *Configuration) ValidSubSection(ss string) bool {
 	return false
 }
 
-// GetConfig builds a config obj
+// Load builds a config obj
 func Load(cf string) (*Configuration, error) {
 	confFile, err := os.Open(cf)
 	if err != nil {
