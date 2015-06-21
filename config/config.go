@@ -7,23 +7,10 @@ import (
 
 // Configuration contains the ccpbot configuration
 type Configuration struct {
-	Name        string `json:"cluster_name"`
-	Endpoint    string `json:"cluster_endpoint"`
-	Username    string `json:"username"`
-	Password    string `json:"password"`
-	SubSections []string
-}
-
-var allowedSubSections = []string{"index"}
-
-// ValidSubSection verifies that the given subsection is usaable
-func (c *Configuration) ValidSubSection(ss string) bool {
-	for _, i := range c.SubSections {
-		if i == ss {
-			return true
-		}
-	}
-	return false
+	Name     string `json:"cluster_name"`
+	Endpoint string `json:"cluster_endpoint"`
+	Username string `json:"username"`
+	Password string `json:"password"`
 }
 
 // Load builds a config obj
@@ -40,8 +27,6 @@ func Load(cf string) (*Configuration, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	conf.SubSections = allowedSubSections
 
 	return conf, nil
 }
