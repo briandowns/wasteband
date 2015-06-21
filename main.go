@@ -10,12 +10,14 @@ import (
 	"github.com/mitchellh/cli"
 )
 
-var WastebandVersion = "0.1"
+// WastebandVersion holds the current version of wasteband
+const WastebandVersion = "0.1"
+
 var conf *config.Configuration
 var configPath = "./config/"
 var configFile = "config.json"
 
-// Commands is the mapping of all the available Consul commands.
+// Commands is the mapping of all the available wasteband commands.
 var Commands map[string]cli.CommandFactory
 
 func main() {
@@ -45,7 +47,7 @@ func run() error {
 		},
 	}
 
-	_, err = c.Run()
+	_, err = c.Run() // ignoring the return value for now...
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error executing CLI: %s\n", err.Error())
 		return err
