@@ -40,7 +40,7 @@ func (s *Search) Run(args []string) int {
 	// process the subcommand and it's options
 	switch args[1] {
 	case "index":
-		_, err := utils.ESConn(d.config.Endpoint).Search()
+		_, err := utils.ESConn(s.config.Endpoint).Search("", "", nil, "")
 		if err != nil {
 			fmt.Printf("%v\n", err.Error())
 			return 1

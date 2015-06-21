@@ -43,13 +43,13 @@ func (s *Show) Run(args []string) int {
 	// process the subcommand and it's options
 	switch args[1] {
 	case "index":
-		_, err := utils.ESConn(d.config.Endpoint).DeleteIndex(args[2])
+		_, err := utils.ESConn(s.config.Endpoint).DeleteIndex(args[2])
 		if err != nil {
 			fmt.Printf("%v\n", err.Error())
 			return 1
 		}
 	case "cluster-health":
-		result, err := utils.ESConn(d.config.Endpoint).Health()
+		result, err := utils.ESConn(s.config.Endpoint).Health()
 		if err != nil {
 			fmt.Printf("%v\n", err.Error())
 		}
