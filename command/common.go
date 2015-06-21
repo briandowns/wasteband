@@ -17,5 +17,5 @@ var allowedResources = map[string][]string{
 	"delete": {"index", "document"},
 	"set":    {""},
 	"show":   {"config", "indexes", "cluster-health", "cluster-state", "cluster-stats"},
-	"search": {""},
+	"search": {"index"},
 }
