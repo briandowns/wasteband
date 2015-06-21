@@ -32,7 +32,7 @@ func (d *Delete) Run(args []string) int {
 
 	// make sure that the command is a valid one
 	if !utils.InSlice(args[0], allowedResources["delete"]) {
-		fmt.Print("error: invalid option for delete\n\n")
+		fmt.Print("ERROR: invalid option for delete\n\n")
 		fmt.Print(d.Help())
 		return 1
 	}

@@ -20,14 +20,14 @@ var configFile = "config.json"
 var Commands map[string]cli.CommandFactory
 
 func main() {
-	if err := run(); err != nil {
+	if retval, err := run(); err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
-		os.Exit(1)
+		os.Exit(retval)
 	}
 }
 
-func run() error {
-	conf, err := config.GetConfig(configFile)
+func run() (int, error) {
+	conf, err := config.Load(configFile)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -46,11 +46,11 @@ func run() error {
 		},
 	}
 
-	_, err = c.Run() // ignoring the return value for now...
+	retval, err := c.Run()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error executing CLI: %s\n", err.Error())
-		return err
+		return 1, err
 	}
 
-	return nil
+	return retval, nil
 }
