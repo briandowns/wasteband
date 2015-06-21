@@ -19,15 +19,18 @@ func NewVersion(version string) cli.CommandFactory {
 	}
 }
 
+// Run shows the current version
 func (v *Version) Run(args []string) int {
 	fmt.Fprintln(os.Stderr, v.version)
 	return 0
 }
 
+// Help displays the below string
 func (v *Version) Help() string {
 	return "Prints the wasteband version"
 }
 
+// Synopsis provides a brief description of the command
 func (v *Version) Synopsis() string {
 	return "Prints the wasteband version"
 }

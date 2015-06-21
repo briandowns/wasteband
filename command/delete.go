@@ -9,8 +9,7 @@ import (
 	"github.com/mitchellh/cli"
 )
 
-var deletableResources = []string{"index", "document"}
-
+// Delete holds in the passed in configuration
 type Delete struct {
 	config *config.Configuration
 }
@@ -26,17 +25,19 @@ func NewDelete(conf *config.Configuration) cli.CommandFactory {
 
 // Delete removes a given resource.
 func (d *Delete) Run(args []string) int {
-	if flags.Has("help", args) {
+	if flags.Has("help", args) || len(args) < 1 {
 		fmt.Print(d.Help())
 		return 1
 	}
 
-	if !utils.InSlice(args[0], deletableResources) {
+	// make sure that the command is a valid one
+	if !utils.InSlice(args[0], allowedResources["delete"]) {
 		fmt.Print("error: invalid option for delete\n\n")
 		fmt.Print(d.Help())
 		return 1
 	}
 
+	// process the subcommand and it's options
 	switch args[1] {
 	case "index":
 		_, err := utils.ESConn(d.config.Endpoint).DeleteIndex(args[2])
@@ -57,7 +58,7 @@ func (d *Delete) Run(args []string) int {
 
 // Help provides full help inforamation for the subcommand
 func (d *Delete) Help() string {
-	return `Usage: wasteband delete <option> <argument> 
+	return `Usage: wasteband delete <option> <arguments> 
 
   Delete a resource
 

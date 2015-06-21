@@ -10,8 +10,8 @@ import (
 	"github.com/mitchellh/cli"
 )
 
-// WastebandVersion holds the current version of wasteband
-const WastebandVersion = "0.1"
+// wastebandVersion holds the current version of wasteband
+const wastebandVersion = "0.1"
 
 var conf *config.Configuration
 var configFile = "config.json"
@@ -34,7 +34,7 @@ func run() error {
 
 	c := &cli.CLI{
 		Name:     "wasteband",
-		Version:  WastebandVersion,
+		Version:  wastebandVersion,
 		Args:     os.Args[1:],
 		HelpFunc: cli.BasicHelpFunc("wasteband"),
 		Commands: map[string]cli.CommandFactory{
@@ -42,7 +42,7 @@ func run() error {
 			"create":  command.NewCreate(conf),
 			"delete":  command.NewDelete(conf),
 			"set":     command.NewSet(conf),
-			"version": command.NewVersion(WastebandVersion),
+			"version": command.NewVersion(wastebandVersion),
 		},
 	}
 
