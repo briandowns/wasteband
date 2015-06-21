@@ -45,7 +45,7 @@ func (s *Show) Run(args []string) int {
 	case "config":
 		fmt.Print("\nwasteband config:\n")
 		w := new(tabwriter.Writer)
-		w.Init(os.Stdout, 0, 8, 0, '\t', 0)
+		w.Init(os.Stdout, 0, 8, 1, '\t', 0)
 
 		v := reflect.ValueOf(*s.config)
 
@@ -79,8 +79,9 @@ func (s *Show) Run(args []string) int {
 			return 1
 		}
 
+		fmt.Printf("\nCluster Health: %s\n", s.config.Name)
 		w := new(tabwriter.Writer)
-		w.Init(os.Stdout, 0, 8, 0, '\t', 0)
+		w.Init(os.Stdout, 0, 8, 1, '\t', 0)
 
 		v := reflect.ValueOf(result)
 
