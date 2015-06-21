@@ -11,7 +11,10 @@ import (
 )
 
 // wastebandVersion holds the current version of wasteband
-const wastebandVersion = "0.1"
+const (
+	wastebandVersion = "0.1"
+	wastebandName    = "wasteband"
+)
 
 var conf *config.Configuration
 var configFile = "config.json"
@@ -33,14 +36,15 @@ func run() (int, error) {
 	}
 
 	c := &cli.CLI{
-		Name:     "wasteband",
+		Name:     wastebandName,
 		Version:  wastebandVersion,
 		Args:     os.Args[1:],
-		HelpFunc: cli.BasicHelpFunc("wasteband"),
+		HelpFunc: cli.BasicHelpFunc(wastebandName),
 		Commands: map[string]cli.CommandFactory{
 			"show":    command.NewShow(conf),
 			"create":  command.NewCreate(conf),
 			"delete":  command.NewDelete(conf),
+			"search":  command.NewDelete(conf),
 			"set":     command.NewSet(conf),
 			"version": command.NewVersion(wastebandVersion),
 		},

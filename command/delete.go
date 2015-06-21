@@ -23,7 +23,7 @@ func NewDelete(conf *config.Configuration) cli.CommandFactory {
 	}
 }
 
-// Delete removes a given resource.
+// Run removes a given resource.
 func (d *Delete) Run(args []string) int {
 	if flags.Has("help", args) || len(args) < 1 {
 		fmt.Print(d.Help())

@@ -113,7 +113,21 @@ func (s *Show) Run(args []string) int {
 }
 
 // Help provides full help inforamation for the subcommand
-func (s *Show) Help() string { return "" }
+func (s *Show) Help() string {
+	return `Usage: wasteband show <option> <arguments> 
+
+  Show a resource
+
+Options:
+
+  config            Display the current wasteband configuration
+  indexes           Display all indexes
+  cluster-health    Display the health of the cluster
+  cluster-state     Display the state of the cluster
+  cluster-stats     Display the stats from the cluster
+  
+`
+}
 
 // Synopsis provides a brief description of the command
 func (s *Show) Synopsis() string {
