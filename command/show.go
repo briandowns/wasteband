@@ -2,6 +2,9 @@ package command
 
 import (
 	"fmt"
+	"os"
+	"reflect"
+	"text/tabwriter"
 
 	"github.com/briandowns/wasteband/config"
 	"github.com/briandowns/wasteband/utils"
@@ -45,8 +48,39 @@ func (s *Show) Run(args []string) int {
 			fmt.Printf("%v\n", err.Error())
 			return 1
 		}
-	}
+	case "cluster-health":
+		result, err := utils.ESConn(d.config.Endpoint).Health()
+		if err != nil {
+			fmt.Printf("%v\n", err.Error())
+		}
 
+		w := new(tabwriter.Writer)
+		w.Init(os.Stdout, 0, 8, 0, '\t', 0)
+
+		v := reflect.ValueOf(result)
+
+		fmt.Fprint(w, "\n")
+
+		// iterate through the values of the struct and write to the tabwriter
+		for i := 0; i < v.NumField(); i++ {
+			// colorize the value of Status field based on it's content
+			switch v.Field(i).Interface() {
+			case "green":
+				fmt.Fprintf(w, "%s\t%v\n", v.Type().Field(i).Name, green(v.Field(i).Interface().(string)))
+				continue
+			case "yellow":
+				fmt.Fprintf(w, "%s\t%v\n", v.Type().Field(i).Name, yellow(v.Field(i).Interface().(string)))
+				continue
+			case "red":
+				fmt.Fprintf(w, "%s\t%v\n", v.Type().Field(i).Name, red(v.Field(i).Interface().(string)))
+				continue
+			}
+			fmt.Fprintf(w, "%s\t%v\n", v.Type().Field(i).Name, v.Field(i).Interface())
+		}
+
+		fmt.Fprintf(w, "\n")
+		w.Flush() // dump out of writing to the tabwriter / os.Stdout
+	}
 	return 1
 }
 
