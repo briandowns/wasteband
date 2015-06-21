@@ -42,7 +42,15 @@ func (s *Show) Run(args []string) int {
 
 	// process the subcommand and it's options
 	switch args[0] {
-	case "index":
+	case "indexes":
+		// most of this functionaity will have to wait on PR 209 in the elastigo
+		// project to be merged.
+		result := utils.ESConn(s.config.Endpoint).GetCatIndexInfo("")
+
+		for _, i := range result {
+			fmt.Println(i.Name)
+		}
+
 		_, err := utils.ESConn(s.config.Endpoint).Health()
 		if err != nil {
 			fmt.Printf("ERROR: %v\n", err.Error())
@@ -81,6 +89,8 @@ func (s *Show) Run(args []string) int {
 
 		fmt.Fprintf(w, "\n")
 		w.Flush() // dump out of writing to the tabwriter / os.Stdout
+	case "cluster-stats":
+		//
 	}
 	return 1
 }
