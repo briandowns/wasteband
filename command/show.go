@@ -2,9 +2,7 @@ package command
 
 import (
 	"fmt"
-	"os"
 	"reflect"
-	"text/tabwriter"
 
 	"github.com/briandowns/wasteband/config"
 	"github.com/briandowns/wasteband/utils"
@@ -44,8 +42,7 @@ func (s *Show) Run(args []string) int {
 	switch args[0] {
 	case "config":
 		fmt.Print("\nwasteband config:\n")
-		w := new(tabwriter.Writer)
-		w.Init(os.Stdout, 0, 8, 1, '\t', 0)
+		w := utils.NewTabWriter()
 
 		v := reflect.ValueOf(*s.config)
 
@@ -80,8 +77,7 @@ func (s *Show) Run(args []string) int {
 		}
 
 		fmt.Printf("\nCluster Health: %s\n", s.config.Name)
-		w := new(tabwriter.Writer)
-		w.Init(os.Stdout, 0, 8, 1, '\t', 0)
+		w := utils.NewTabWriter()
 
 		v := reflect.ValueOf(result)
 
