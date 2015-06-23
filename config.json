@@ -1,6 +1,6 @@
 {
-	"cluster_name": "",
-	"cluster_endpoint": "",
+	"cluster_name": "es-cluster-b",
+	"cluster_endpoint": "es-b.internal.shutterfly.com",
 	"username": "",
 	"password": ""
 }

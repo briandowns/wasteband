@@ -5,6 +5,7 @@ import (
 	"github.com/fatih/color"
 )
 
+// color functions used for output
 var (
 	red    = color.New(color.FgRed).SprintFunc()
 	yellow = color.New(color.FgYellow).SprintFunc()
