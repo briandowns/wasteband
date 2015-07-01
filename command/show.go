@@ -48,20 +48,23 @@ func (s *Show) Run(args []string) int {
 
 		fmt.Fprintf(w, "\n")
 		w.Flush()
-	case "indexes":
+	case "indices":
 		// most of this functionaity will have to wait on PR 209 in the elastigo
 		// project to be merged.
 		result := utils.ESConn(s.config.Endpoint).GetCatIndexInfo("")
 
+		w := utils.NewTabWriter()
+
+		fmt.Fprintf(w, "\nHealth\tName\tShards\tReplicas\tDocuments\tSize")
+		fmt.Fprintf(w, "\n----------\t----------\t----------\t----------\t----------\t----------\n")
+
 		for _, i := range result {
-			fmt.Println(i.Name)
+			fmt.Fprintf(w, "%s\t%s\t%d\t%d\t%d\t%d\n",
+				i.Health, i.Name, i.Shards, i.Replicas, i.Docs.Deleted, i.Store.Size)
 		}
 
-		_, err := utils.ESConn(s.config.Endpoint).Health()
-		if err != nil {
-			fmt.Printf("ERROR: %v\n", err.Error())
-			return 1
-		}
+		fmt.Fprintf(w, "\n")
+		w.Flush()
 	case "cluster-health":
 		result, err := utils.ESConn(s.config.Endpoint).Health()
 		if err != nil {
@@ -81,16 +84,20 @@ func (s *Show) Run(args []string) int {
 			// colorize the value of Status field based on it's content
 			switch v.Field(i).Interface() {
 			case "green":
-				fmt.Fprintf(w, "%s\t%v\n", v.Type().Field(i).Name, green(v.Field(i).Interface().(string)))
+				fmt.Fprintf(w, "%s\t%v\n",
+					v.Type().Field(i).Name, green(v.Field(i).Interface().(string)))
 				continue
 			case "yellow":
-				fmt.Fprintf(w, "%s\t%v\n", v.Type().Field(i).Name, yellow(v.Field(i).Interface().(string)))
+				fmt.Fprintf(w, "%s\t%v\n",
+					v.Type().Field(i).Name, yellow(v.Field(i).Interface().(string)))
 				continue
 			case "red":
-				fmt.Fprintf(w, "%s\t%v\n", v.Type().Field(i).Name, red(v.Field(i).Interface().(string)))
+				fmt.Fprintf(w, "%s\t%v\n",
+					v.Type().Field(i).Name, red(v.Field(i).Interface().(string)))
 				continue
 			}
-			fmt.Fprintf(w, "%s\t%v\n", v.Type().Field(i).Name, v.Field(i).Interface())
+			fmt.Fprintf(w, "%s\t%v\n",
+				v.Type().Field(i).Name, v.Field(i).Interface())
 		}
 
 		fmt.Fprintf(w, "\n")
@@ -98,7 +105,7 @@ func (s *Show) Run(args []string) int {
 	case "cluster-stats":
 		//
 	default:
-		fmt.Println("ERROR: invalid option for show\n\n")
+		fmt.Println("ERROR: invalid option for show\n")
 	}
 
 	return 1

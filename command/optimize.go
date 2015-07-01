@@ -38,9 +38,10 @@ func (o *Optimize) Run(args []string) int {
 			fmt.Printf("%v\n", err.Error())
 			return 1
 		}
-		fmt.Printf("Result: %b, ShardStatus: %V\n", result.Ok)
+		fmt.Printf("Result: %b, ShardStatus: %v\n", result.Ok)
+
 	default:
-		fmt.Println("ERROR: invalid option for optimize\n\n")
+		fmt.Printf("ERROR: invalid option for optimize\n")
 	}
 
 	return 1
@@ -48,7 +49,7 @@ func (o *Optimize) Run(args []string) int {
 
 // Help provides full help inforamation for the subcommand
 func (o *Optimize) Help() string {
-	return `Usage: wasteband optimize <option> <arguments> 
+	return `Usage: wasteband optimize <argument>
 
   Optimize an index
 

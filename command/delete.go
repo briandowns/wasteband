@@ -45,7 +45,7 @@ func (d *Delete) Run(args []string) int {
 			return 1
 		}
 	default:
-		fmt.Println("ERROR: invalid option for delete\n\n")
+		fmt.Println("ERROR: invalid option for delete\n")
 	}
 
 	return 1

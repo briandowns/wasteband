@@ -39,7 +39,7 @@ func (s *Search) Run(args []string) int {
 			return 1
 		}
 	default:
-		fmt.Println("ERROR: invalid option for search\n\n")
+		fmt.Println("ERROR: invalid option for search\n")
 	}
 
 	return 1
