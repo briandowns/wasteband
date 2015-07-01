@@ -34,6 +34,11 @@ func (s *Show) Run(args []string) int {
 	// process the subcommand and it's options
 	switch args[0] {
 	case "config":
+		/*
+
+			Fix all of the code below.  THere's no reason for reflection here!!!
+
+		*/
 		fmt.Print("\nwasteband config:\n")
 		w := utils.NewTabWriter()
 
