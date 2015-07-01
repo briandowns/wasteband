@@ -30,13 +30,6 @@ func (d *Delete) Run(args []string) int {
 		return 1
 	}
 
-	// make sure that the command is a valid one
-	if !utils.InSlice(args[0], allowedResources["delete"]) {
-		fmt.Print("ERROR: invalid option for delete\n\n")
-		fmt.Print(d.Help())
-		return 1
-	}
-
 	// process the subcommand and it's options
 	switch args[1] {
 	case "index":
@@ -51,6 +44,8 @@ func (d *Delete) Run(args []string) int {
 			fmt.Printf("%v\n", err)
 			return 1
 		}
+	default:
+		fmt.Println("ERROR: invalid option for delete\n\n")
 	}
 
 	return 1

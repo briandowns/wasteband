@@ -31,13 +31,6 @@ func (s *Show) Run(args []string) int {
 		return 1
 	}
 
-	// make sure that the command is a valid one
-	if !utils.InSlice(args[0], allowedResources["show"]) {
-		fmt.Print("ERROR: invalid option for show\n\n")
-		fmt.Print(s.Help())
-		return 1
-	}
-
 	// process the subcommand and it's options
 	switch args[0] {
 	case "config":
@@ -104,7 +97,10 @@ func (s *Show) Run(args []string) int {
 		w.Flush() // dump out of writing to the tabwriter / os.Stdout
 	case "cluster-stats":
 		//
+	default:
+		fmt.Println("ERROR: invalid option for show\n\n")
 	}
+
 	return 1
 }
 

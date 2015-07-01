@@ -14,9 +14,10 @@ var (
 
 // allowedResources holds the allowable subcommand options
 var allowedResources = map[string][]string{
-	"create": {"index", "document"},
-	"delete": {"index", "document"},
-	"set":    {""},
-	"show":   {"config", "indexes", "cluster-health", "cluster-state", "cluster-stats"},
-	"search": {"index"},
+	"create":   {"index", "document"},
+	"delete":   {"index", "document"},
+	"optimize": {"index"},
+	"set":      {""},
+	"show":     {"config", "indexes", "cluster-health", "cluster-state", "cluster-stats"},
+	"search":   {"index"},
 }

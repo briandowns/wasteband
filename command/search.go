@@ -30,13 +30,6 @@ func (s *Search) Run(args []string) int {
 		return 1
 	}
 
-	// make sure that the command is a valid one
-	if !utils.InSlice(args[0], allowedResources["search"]) {
-		fmt.Print("ERROR: invalid option for show\n\n")
-		fmt.Print(s.Help())
-		return 1
-	}
-
 	// process the subcommand and it's options
 	switch args[1] {
 	case "index":
@@ -45,6 +38,8 @@ func (s *Search) Run(args []string) int {
 			fmt.Printf("%v\n", err.Error())
 			return 1
 		}
+	default:
+		fmt.Println("ERROR: invalid option for search\n\n")
 	}
 
 	return 1

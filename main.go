@@ -41,12 +41,13 @@ func run() (int, error) {
 		Args:     os.Args[1:],
 		HelpFunc: cli.BasicHelpFunc(wastebandName),
 		Commands: map[string]cli.CommandFactory{
-			"show":    command.NewShow(conf),
-			"create":  command.NewCreate(conf),
-			"delete":  command.NewDelete(conf),
-			"search":  command.NewDelete(conf),
-			"set":     command.NewSet(conf),
-			"version": command.NewVersion(wastebandVersion),
+			"show":     command.NewShow(conf),
+			"create":   command.NewCreate(conf),
+			"delete":   command.NewDelete(conf),
+			"optimize": command.NewOptimize(conf),
+			"search":   command.NewDelete(conf),
+			"set":      command.NewSet(conf),
+			"version":  command.NewVersion(wastebandVersion),
 		},
 	}
 
