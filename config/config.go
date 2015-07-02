@@ -15,10 +15,7 @@ type Configuration struct {
 
 // HasEndpoint checks if an endpoint has been set
 func (c *Configuration) HasEndpoint() bool {
-	if c.Endpoint != "" {
-		return true
-	}
-	return false
+	return c.Endpoint != "" || false
 }
 
 // Load builds a config obj

@@ -34,79 +34,11 @@ func (s *Show) Run(args []string) int {
 	// process the subcommand and it's options
 	switch args[0] {
 	case "config":
-		/*
-
-			Fix all of the code below.  THere's no reason for reflection here!!!
-
-		*/
-		fmt.Print("\nwasteband config:\n")
-		w := utils.NewTabWriter()
-
-		v := reflect.ValueOf(*s.config)
-
-		fmt.Fprint(w, "\n")
-
-		// iterate through the values of the struct and write to the tabwriter
-		for i := 0; i < v.NumField(); i++ {
-			fmt.Fprintf(w, "%s\t%v\n", v.Type().Field(i).Name, v.Field(i).Interface())
-		}
-
-		fmt.Fprintf(w, "\n")
-		w.Flush()
+		s.showConfig()
 	case "indices":
-		// most of this functionaity will have to wait on PR 209 in the elastigo
-		// project to be merged.
-		result := utils.ESConn(s.config.Endpoint).GetCatIndexInfo("")
-
-		w := utils.NewTabWriter()
-
-		fmt.Fprintf(w, "\nHealth\tName\tShards\tReplicas\tDocuments\tSize")
-		fmt.Fprintf(w, "\n----------\t----------\t----------\t----------\t----------\t----------\n")
-
-		for _, i := range result {
-			fmt.Fprintf(w, "%s\t%s\t%d\t%d\t%d\t%d\n",
-				i.Health, i.Name, i.Shards, i.Replicas, i.Docs.Deleted, i.Store.Size)
-		}
-
-		fmt.Fprintf(w, "\n")
-		w.Flush()
+		s.showIndices()
 	case "cluster-health":
-		result, err := utils.ESConn(s.config.Endpoint).Health()
-		if err != nil {
-			fmt.Printf("ERROR: %v\n", err.Error())
-			return 1
-		}
-
-		fmt.Printf("\nCluster Health: %s\n", s.config.Name)
-		w := utils.NewTabWriter()
-
-		v := reflect.ValueOf(result)
-
-		fmt.Fprint(w, "\n")
-
-		// iterate through the values of the struct and write to the tabwriter
-		for i := 0; i < v.NumField(); i++ {
-			// colorize the value of Status field based on it's content
-			switch v.Field(i).Interface() {
-			case "green":
-				fmt.Fprintf(w, "%s\t%v\n",
-					v.Type().Field(i).Name, green(v.Field(i).Interface().(string)))
-				continue
-			case "yellow":
-				fmt.Fprintf(w, "%s\t%v\n",
-					v.Type().Field(i).Name, yellow(v.Field(i).Interface().(string)))
-				continue
-			case "red":
-				fmt.Fprintf(w, "%s\t%v\n",
-					v.Type().Field(i).Name, red(v.Field(i).Interface().(string)))
-				continue
-			}
-			fmt.Fprintf(w, "%s\t%v\n",
-				v.Type().Field(i).Name, v.Field(i).Interface())
-		}
-
-		fmt.Fprintf(w, "\n")
-		w.Flush() // dump out of writing to the tabwriter / os.Stdout
+		s.showClusterHealth()
 	case "cluster-stats":
 		//
 	default:
@@ -136,4 +68,83 @@ Options:
 // Synopsis provides a brief description of the command
 func (s *Show) Synopsis() string {
 	return "Show an Elasticsearch resource"
+}
+
+// showConfig outputs the current running configuration
+func (s *Show) showConfig() {
+	fmt.Print("\nwasteband config:\n")
+	w := utils.NewTabWriter()
+
+	v := reflect.ValueOf(*s.config)
+
+	fmt.Fprint(w, "\n")
+
+	// iterate through the values of the struct and write to the tabwriter
+	for i := 0; i < v.NumField(); i++ {
+		fmt.Fprintf(w, "%s\t%v\n", v.Type().Field(i).Name, v.Field(i).Interface())
+	}
+
+	fmt.Fprintf(w, "\n")
+	w.Flush()
+}
+
+// showIndices outputs data associated with all indices
+func (s *Show) showIndices() {
+	// most of this functionaity will have to wait on PR 209 in the elastigo
+	// project to be merged.
+	result := utils.ESConn(s.config.Endpoint).GetCatIndexInfo("")
+
+	w := utils.NewTabWriter()
+
+	fmt.Fprintf(w, "\nHealth\tName\tShards\tReplicas\tDocuments\tSize")
+	fmt.Fprintf(w, "\n----------\t----------\t----------\t----------\t----------\t----------\n")
+
+	for _, i := range result {
+		fmt.Fprintf(w, "%s\t%s\t%d\t%d\t%d\t%d\n",
+			i.Health, i.Name, i.Shards, i.Replicas, i.Docs.Deleted, i.Store.Size)
+	}
+
+	fmt.Fprintf(w, "\n")
+	w.Flush()
+}
+
+// showClusterHealth outputs the health of the cluster
+func (s *Show) showClusterHealth() int {
+	result, err := utils.ESConn(s.config.Endpoint).Health()
+	if err != nil {
+		fmt.Printf("ERROR: %v\n", err.Error())
+		return 1
+	}
+
+	fmt.Printf("\nCluster Health: %s\n", s.config.Name)
+	w := utils.NewTabWriter()
+
+	v := reflect.ValueOf(result)
+
+	fmt.Fprint(w, "\n")
+
+	// iterate through the values of the struct and write to the tabwriter
+	for i := 0; i < v.NumField(); i++ {
+		// colorize the value of Status field based on it's content
+		switch v.Field(i).Interface() {
+		case "green":
+			fmt.Fprintf(w, "%s\t%v\n",
+				v.Type().Field(i).Name, green(v.Field(i).Interface().(string)))
+			continue
+		case "yellow":
+			fmt.Fprintf(w, "%s\t%v\n",
+				v.Type().Field(i).Name, yellow(v.Field(i).Interface().(string)))
+			continue
+		case "red":
+			fmt.Fprintf(w, "%s\t%v\n",
+				v.Type().Field(i).Name, red(v.Field(i).Interface().(string)))
+			continue
+		}
+		fmt.Fprintf(w, "%s\t%v\n",
+			v.Type().Field(i).Name, v.Field(i).Interface())
+	}
+
+	fmt.Fprintf(w, "\n")
+	w.Flush() // dump out of writing to the tabwriter / os.Stdout
+	return 1
 }
