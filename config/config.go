@@ -13,6 +13,14 @@ type Configuration struct {
 	Password string `json:"password"`
 }
 
+// HasEndpoint checks if an endpoint has been set
+func (c *Configuration) HasEndpoint() bool {
+	if c.Endpoint != "" {
+		return true
+	}
+	return false
+}
+
 // Load builds a config obj
 func Load(cf string) (*Configuration, error) {
 	confFile, err := os.Open(cf)

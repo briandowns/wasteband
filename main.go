@@ -35,6 +35,11 @@ func run() (int, error) {
 		log.Fatalln(err)
 	}
 
+	if !conf.HasEndpoint() {
+		fmt.Printf("ERROR: no Elasticsearch endpoint set.\n")
+		return 1, nil
+	}
+
 	c := &cli.CLI{
 		Name:     wastebandName,
 		Version:  wastebandVersion,
