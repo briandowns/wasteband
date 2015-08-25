@@ -38,8 +38,7 @@ func (o *Optimize) Run(args []string) int {
 			fmt.Printf("%v\n", err.Error())
 			return 1
 		}
-		fmt.Printf("Result: %b, ShardStatus: %v\n", result.Ok)
-
+		fmt.Printf("Result: %b, ShardStatus: %v\n", result.Ok, result)
 	default:
 		fmt.Printf("ERROR: invalid option for optimize\n")
 	}

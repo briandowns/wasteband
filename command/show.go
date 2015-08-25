@@ -57,7 +57,7 @@ func (s *Show) Help() string {
 Options:
 
   config            Display the current wasteband configuration
-  indexes           Display all indexes
+  indices           Display all indices
   cluster-health    Display the health of the cluster
   cluster-state     Display the state of the cluster
   cluster-stats     Display the stats from the cluster
@@ -96,12 +96,12 @@ func (s *Show) showIndices() {
 
 	w := utils.NewTabWriter()
 
-	fmt.Fprintf(w, "\nHealth\tName\tShards\tReplicas\tDocuments\tSize")
-	fmt.Fprintf(w, "\n----------\t----------\t----------\t----------\t----------\t----------\n")
+	fmt.Fprintf(w, "\nHealth\tStatus\tName\tShards\tReplicas\tDocuments\tSize")
+	fmt.Fprintf(w, "\n----------\t----------\t----------\t----------\t----------\t----------\t----------\n")
 
 	for _, i := range result {
-		fmt.Fprintf(w, "%s\t%s\t%d\t%d\t%d\t%d\n",
-			i.Health, i.Name, i.Shards, i.Replicas, i.Docs.Deleted, i.Store.Size)
+		fmt.Fprintf(w, "%s\t%s\t%s\t%d\t%d\t%d\t%d\n",
+			i.Health, i.Status, i.Name, i.Shards, i.Replicas, i.Docs.Deleted, i.Store.Size)
 	}
 
 	fmt.Fprintf(w, "\n")
